@@ -1,5 +1,5 @@
 export const getTodos = async () => {
-    const res = await fetch("https://playground.4geeks.com/todo/users/name");
+    const res = await fetch("https://playground.4geeks.com/todo/users");
     if (!res.ok) {
         createUser();
     }

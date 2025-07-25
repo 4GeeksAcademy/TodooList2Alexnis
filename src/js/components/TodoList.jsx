@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {getTodos} from "../API/todoList.API";
+import { getTodos } from "../../API/serviceApi";
 
 export const TodoList = () => {
     const [tareas, setTareas] = useState([]);
@@ -30,9 +30,7 @@ export const TodoList = () => {
              placeholder="tarea"
             />
 
-            {tareas.map((tarea, index) => ) 
-                <p key={index}>{tarea.label}</p>
-            )}
+
         </div>
     )
 }

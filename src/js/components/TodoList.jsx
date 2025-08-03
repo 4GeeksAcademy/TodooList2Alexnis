@@ -1,19 +1,23 @@
 import { useEffect, useState } from "react";
-import { getTodos } from "../../API/serviceApi";
+import { createTodo, deleteTodo, getTodos } from "../../API/serviceApi";
 
 export const TodoList = () => {
-    const [tareas, setTareas] = useState([]);
+    const [nombre, setNombre] = useState([]);
     const [inputValue, setInputValue] = useState ("");
     
-    const handleKeyUp = (e) => {
+    console.log(nombre)
+
+    const handleKeyUp = async (e) => {
         if (e.key === "Enter") {
-            setTareas ((prev) => [...prev, inputValue]);
+        await createTodo(inputValue)
+        await datosRecibidos()
+        setInputValue("")
         }
     };
 
     const datosRecibidos = async () => {
         const datos = await getTodos();
-        setTareas(datos);
+        setNombre(datos);
     }
 
     useEffect (()=> {
@@ -22,15 +26,22 @@ export const TodoList = () => {
 
     return(
         <div>
+            <h3>Agregar Tarea</h3>
             <input
              value={inputValue}
              type="text"
              onChange={(e) => setInputValue(e.target.value)}
              onKeyUp={(e) => handleKeyUp(e)}
-             placeholder="tarea"
+             placeholder="Nombre"
             />
-
-
+            {
+                nombre.map(tarea => (
+                    <p key={tarea.id}>
+                        <span>{tarea.label}</span>
+                        <button className="btn btn-darkbtn" onClick={async() => {deleteTodo (tarea.id), await datosRecibidos()}}><i class="fa-solid fa-trash-can"></i></button>
+                        </p>
+                ))
+            }
         </div>
     )
 }
